@@ -7,17 +7,17 @@ class Artist
     @@all
   end
 
-  def initialize 
-    save 
-  end
-  def self.reset_all
-    @@all.clear
+  def initialize
+    save
   end
 
-  def save 
+  def save
     @@all << self
   end
 
+  def self.reset_all
+    @@all.clear
+  end
 
 
 end
