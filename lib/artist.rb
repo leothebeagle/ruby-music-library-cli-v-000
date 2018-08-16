@@ -3,14 +3,21 @@ class Artist
 
   @@all = []
 
-  def self.all 
-    @@all 
+  def self.all
+    @@all
   end
 
-  def self.reset_all
-    @@all.clear 
+  def initialize 
+    save 
   end
-  
+  def self.reset_all
+    @@all.clear
+  end
+
+  def save 
+    @@all << self
+  end
+
 
 
 end
