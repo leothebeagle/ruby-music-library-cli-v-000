@@ -1,94 +1,94 @@
-class Artist
-  attr_accessor :name, :songs
+# class Artist
+#   attr_accessor :name, :songs
+# 
+#   @@all = []
+# 
+#   def self.all
+#     @@all
+#   end
+# 
+#   def initialize
+#     save
+#   end
+# 
+#   def save
+#     @@all << self
+#   end
+# 
+#   def self.reset_all
+#     @@all.clear
+#   end
+# 
+#   def self.find_by_name(name)
+#     self.all.find { |artist| artist.name == name}
+#   end
+# 
+# 
+# end
 
-  @@all = []
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+require 'pry'
+# require_relative '../lib/concerns.rb'
+
+class Artist
+  extend Concerns::Findable
+  attr_accessor :name
+  attr_reader :songs
+
+  @@all = [] #keeps track of all artists ever created
 
   def self.all
     @@all
   end
 
-  def initialize
-    save
+  def self.destroy_all
+    @@all.clear
+  end
+
+  def self.create(artist_name) #initializes an instance then pushes that instance into the @@all array.
+    artist = Artist.new(artist_name)
+    artist.save
+    artist
+  end
+
+  def initialize(name)
+    @name = name
+    @songs = []
   end
 
   def save
     @@all << self
   end
 
-  def self.reset_all
-    @@all.clear
+  def add_song(song)
+    song.artist = self unless song.artist != nil
+    song.artist.songs << song unless @songs.include?(song)
   end
 
-  def self.find_by_name(name)
-    self.all.find { |artist| artist.name == name}
+  def genres
+    self.songs.collect do |song|
+      song.genre
+    end.uniq
+
   end
+
 
 
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# require 'pry'
-# # require_relative '../lib/concerns.rb'
-#
-# class Artist
-#   extend Concerns::Findable
-#   attr_accessor :name
-#   attr_reader :songs
-#
-#   @@all = [] #keeps track of all artists ever created
-#
-#   def self.all
-#     @@all
-#   end
-#
-#   def self.destroy_all
-#     @@all.clear
-#   end
-#
-#   def self.create(artist_name) #initializes an instance then pushes that instance into the @@all array.
-#     artist = Artist.new(artist_name)
-#     artist.save
-#     artist
-#   end
-#
-#   def initialize(name)
-#     @name = name
-#     @songs = []
-#   end
-#
-#   def save
-#     @@all << self
-#   end
-#
-#   def add_song(song)
-#     song.artist = self unless song.artist != nil
-#     song.artist.songs << song unless @songs.include?(song)
-#   end
-#
-#   def genres
-#     self.songs.collect do |song|
-#       song.genre
-#     end.uniq
-#
-#   end
-#
-#
-#
-# end
  
